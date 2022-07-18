@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import { useRef, useState } from 'react';
 import Products from './Products';
-import {root} from "./index"
+import {root} from "./index";
 
 export default function Login () {
 var [errors, setErrors] = useState("");
