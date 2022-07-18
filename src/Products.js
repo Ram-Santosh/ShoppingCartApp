@@ -146,11 +146,13 @@ export default function Products () {
     var handleSort = (e) => {
         var copyDisplay = [...displayCards];
 
-        copyDisplay.sort(function (a,b){
-            return a[e.target.value] - b[e.target.value];
-        });
-
-        setDisplayCards(copyDisplay);
+        if (e.target.value !== "Select an option"){
+            copyDisplay.sort(function (a,b){
+                return a[e.target.value] - b[e.target.value];
+            });
+    
+            setDisplayCards(copyDisplay);
+        }
     }
 
     return (
@@ -225,6 +227,7 @@ export default function Products () {
                             <Accordion.Header>Sort</Accordion.Header>
                             <Accordion.Body>
                                 <select name="sort" onChange={handleSort}>
+                                    <option value="Select an option">Select an option</option>
                                     <option value="price">Price</option>
                                     <option value="rating">Rating</option>
                                     <option value="discountPercentage">Discount Percentage</option>
