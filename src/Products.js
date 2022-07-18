@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import {root} from "./index";
 import React from 'react';
 import CardFocus from "./Card";
@@ -15,27 +15,122 @@ import logo from "./logo.svg";
 
 var passSelectedCard = createContext();
 
+
 export default function Products () {
     var brands = ["OPPO","Apple","Samsung","Huawei","Ifei Home","Soft Cotton"];
     var category = ["laptops","smartphones","furniture","groceries","skincare","fragrances"];
     var allProducts = productCat["products"];
     var [displayCards, setDisplayCards] = useState(allProducts);
+    var [filter, setFilter] = useState({
+        brand: [],
+        category: [],
+        title: false,
+        stock: false,
+        brandFlag: false,
+        categoryFlag: false,
+        titleFlag: false
+    })
+
+    useEffect(() => {
+        console.log("filter",filter);
+         //Filter logic
+         var fil = allProducts;
+
+         if (filter.brandFlag){
+            fil = allProducts.filter((product) => {
+                if (filter.brand.includes(product.brand)) return product;
+            })
+         }
+
+         if (filter.categoryFlag){
+            fil = fil.filter((product) => {
+                if (filter.category.includes(product.category)) return product;
+            })
+        }
+
+         if (filter.titleFlag){
+            fil = fil.filter((product) => {
+                if (filter.title !== false && filter.title.length > 0){
+                    if (product.title.toLowerCase().startsWith(filter.title.toLowerCase())) return product;
+                }
+            })
+         }
+
+         if (filter.stock){
+            fil = fil.filter((product) => {
+                if (product.stock > 0) return product;
+            })
+         }
+
+         console.log(fil);
+         setDisplayCards(fil);
+
+        //All filters turned off
+        if (filter.stock === false && filter.title === false && filter.brand.length === 0 && filter.category.length === 0){
+            console.log("default")
+            setDisplayCards(allProducts);
+        }
+    },[filter,allProducts])
 
     var handleFilter = (e) => {
+
+        // Stock
         if (e.target.name === "instock"){
             if (e.target.checked){
-                setDisplayCards(allProducts.filter((product) => {
-                    if (product.stock > 0){
-                        return product
-                    }
-                }))
+                setFilter({...filter, stock:true})
+            }
+            else setFilter({...filter, stock:false});
+        }
+
+        //Title
+        if (e.target.name === "title"){
+            if (e.target.value.length > 0)setFilter({...filter, title: e.target.value, titleFlag: true});
+            else setFilter({...filter, title: false, titleFlag: false});
+        }
+
+        //Brand
+        if (e.target.className === "brand"){
+            var brand = filter.brand;
+            if (e.target.checked){
+                brand.push(e.target.name);
+                setFilter({...filter, brand: brand, brandFlag: true});
             }
             else {
-                setDisplayCards(allProducts);
+                brand = brand.filter((b) => {
+                    if (b !== e.target.name)return b;
+                });
+                if (brand.length === 0){
+                    setFilter({...filter, brandFlag: false, brand: []}) 
+                } 
+                else {
+                    setFilter({...filter, brand: brand});
+                }
+            }
+        }
+
+        //Category
+        if (e.target.className === "category"){
+            var cat = filter.category;
+            if (e.target.checked){
+                cat.push(e.target.name);
+                setFilter({...filter, category: cat, categoryFlag: true});
+            }
+            else {
+                cat = cat.filter((c) => {
+                    if (c !== e.target.name)return c;
+                });
+                if (cat.length === 0) {
+                    setFilter({...filter, categoryFlag: false, category: []});
+                }
+                else {
+                    setFilter({...filter, category: cat});
+                }
             }
         }
     };
-    console.log(displayCards);
+
+    console.log(filter);
+
     var selectCard = (e) => {
         root.render(
             <React.StrictMode>
@@ -78,21 +173,34 @@ export default function Products () {
                         <Accordion.Item eventKey="0">
                             <Accordion.Header>Brands</Accordion.Header>
                             <Accordion.Body>
-                                {brands.map(brand => <Form.Check onChange={handleFilter} aria-label="radio 1" label={brand} />)}
+                                {brands.map(brand => {
+                                    return <>
+                                        <input type="checkbox" onChange={handleFilter} className="brand" name={brand} aria-label="radio 1" />
+                                        <label> &nbsp;{brand}</label><br />
+                                    </>
+                                    }
+                                )}
                             </Accordion.Body>
                         </Accordion.Item>
                         <Accordion.Item eventKey="1">
                             <Accordion.Header>Category</Accordion.Header>
                             <Accordion.Body>
-                                {category.map(cat => <Form.Check onChange={handleFilter} aria-label="radio 1" label={cat} />)}
+                                {category.map((cat) => {
+                                    return <>
+                                        <input type="checkbox" onChange={handleFilter} className="category" name={cat} aria-label="radio 1" />
+                                        <label> &nbsp;{cat}</label><br/>
+                                    </>
+                                })
+                            }
                             </Accordion.Body>
                         </Accordion.Item>
                         <Accordion.Item eventKey="2">
                             <Accordion.Header>Title</Accordion.Header>
                             <Accordion.Body>
-                            <InputGroup className="mb-3">
-                                <InputGroup.Text onChange={handleFilter} id="basic-addon1">Title</InputGroup.Text>
+                            <InputGroup className="mb-3" onChange={handleFilter} >
+                                <InputGroup.Text id="basic-addon1">Title</InputGroup.Text>
                                 <Form.Control
+                                name="title"
                                 placeholder="Enter Title"
                                 aria-label="Title"
                                 aria-describedby="basic-addon1"
