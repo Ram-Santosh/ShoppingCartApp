@@ -32,7 +32,6 @@ export default function Products () {
     })
 
     useEffect(() => {
-        console.log("filter",filter);
          //Filter logic
          var fil = allProducts;
 
@@ -61,13 +60,10 @@ export default function Products () {
                 if (product.stock > 0) return product;
             })
          }
-
-         console.log(fil);
          setDisplayCards(fil);
 
         //All filters turned off
         if (filter.stock === false && filter.title === false && filter.brand.length === 0 && filter.category.length === 0){
-            console.log("default")
             setDisplayCards(allProducts);
         }
     },[filter,allProducts])
@@ -129,8 +125,6 @@ export default function Products () {
         }
     };
 
-    console.log(filter);
-
     var selectCard = (e) => {
         root.render(
             <React.StrictMode>
@@ -147,6 +141,16 @@ export default function Products () {
                 <Products />
             </React.StrictMode>
         );
+    }
+
+    var handleSort = (e) => {
+        var copyDisplay = [...displayCards];
+
+        copyDisplay.sort(function (a,b){
+            return a[e.target.value] - b[e.target.value];
+        });
+
+        setDisplayCards(copyDisplay);
     }
 
     return (
@@ -212,6 +216,19 @@ export default function Products () {
                             <Accordion.Header>In stock</Accordion.Header>
                             <Accordion.Body>
                                 <Form.Check onChange={handleFilter} aria-label="radio 1" name="instock" label="Show Instock only" />
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    </Accordion>
+                    <h4>Sort</h4>
+                    <Accordion>
+                        <Accordion.Item eventKey="0">
+                            <Accordion.Header>Sort</Accordion.Header>
+                            <Accordion.Body>
+                                <select name="sort" onChange={handleSort}>
+                                    <option value="price">Price</option>
+                                    <option value="rating">Rating</option>
+                                    <option value="discountPercentage">Discount Percentage</option>
+                                </select>
                             </Accordion.Body>
                         </Accordion.Item>
                     </Accordion>
