@@ -173,7 +173,7 @@ export default function Products () {
             <Row>
                 <Col md={{span:2, offset:1}}>
                     <h3>Filter</h3>
-                    <Accordion defaultActiveKey="0">
+                    <Accordion defaultActiveKey="0" className="mb-4">
                         <Accordion.Item eventKey="0">
                             <Accordion.Header>Brands</Accordion.Header>
                             <Accordion.Body>
@@ -245,7 +245,7 @@ export default function Products () {
 
                             var card = <Col xs={{offset:1,span:3}} key={index}>
                                 <Card 
-                                    style={{ width: '18rem', marginBottom: "20px", height:"380px", borderRadius:"1rem"}} 
+                                    style={{ width: '18rem', marginBottom: "20px", height:"420px", borderRadius:"1rem"}} 
                                     key={id}>
                                 <Card.Img variant="top" src={image} style={{height:"18vh" , objectFit:"contain", borderTopLeftRadius:"1rem", borderTopRightRadius:"1rem"}}/>
                                 <Card.Body style={{backgroundColor:"#f3f3f3", borderBottomRightRadius:"1rem", borderBottomLeftRadius:"1rem"}}>
