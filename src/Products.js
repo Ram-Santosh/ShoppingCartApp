@@ -21,10 +21,21 @@ export default function Products () {
     var allProducts = productCat["products"];
     var [displayCards, setDisplayCards] = useState(allProducts);
 
-    var handleFilter = () => {
-
+    var handleFilter = (e) => {
+        if (e.target.name === "instock"){
+            if (e.target.checked){
+                setDisplayCards(allProducts.filter((product) => {
+                    if (product.stock > 0){
+                        return product
+                    }
+                }))
+            }
+            else {
+                setDisplayCards(allProducts);
+            }
+        }
     };
-
+    console.log(displayCards);
     var selectCard = (e) => {
         root.render(
             <React.StrictMode>
@@ -92,7 +103,7 @@ export default function Products () {
                         <Accordion.Item eventKey="3">
                             <Accordion.Header>In stock</Accordion.Header>
                             <Accordion.Body>
-                                <Form.Check onChange={handleFilter} aria-label="radio 1" label="Show Instock only" />
+                                <Form.Check onChange={handleFilter} aria-label="radio 1" name="instock" label="Show Instock only" />
                             </Accordion.Body>
                         </Accordion.Item>
                     </Accordion>

@@ -72,7 +72,7 @@ export default function CardFocus () {
                         <p>Rating:  ⭐{product.rating}</p>
                         <hr/>
                         <p>M.R.P: <s>${product.price}</s></p>
-                        <p>On Sale: ${product.price - product.discountPercentage*product.price*0.01}</p>
+                        <p>On Sale: ${Math.round(product.price - product.discountPercentage*product.price*0.01)}</p>
                     </Col>
                 </Row>
                 <Row className="mt-4">
