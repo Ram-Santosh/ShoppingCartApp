@@ -10,9 +10,9 @@ import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import logo from "./logo.svg";
 import { useNavigate } from "react-router-dom";
-import { isSelected } from "./reducers";
-import { useDispatch} from "react-redux";
-import { useSelector } from 'react-redux';
+import { isSelected, loadAllProducts } from "./reducers";
+import { useSelector, useDispatch} from "react-redux";
+import axios from 'axios';
 
 export default function Products () {
     var brands = ["OPPO","Apple","Samsung","Huawei","Ifei Home","Soft Cotton"];
@@ -31,11 +31,14 @@ export default function Products () {
     var navigate = useNavigate();
     const dispatch = useDispatch();
 
-    useEffect(async () => {
-        await axios.get('https://dummyjson.com/docs/products')
+    useEffect(() => {
+        async function loadData () {
+            await axios.get('https://dummyjson.com/products?limit=100')
             .then(response => {
-                console.lo
+                dispatch(loadAllProducts(response.data.products));
             });
+        }
+        loadData();
     }, []);
 
     useEffect(() => {

@@ -9,9 +9,9 @@ import Col from 'react-bootstrap/Col';
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-var allProducts = productCat["products"];
 
 export default function CardFocus () {
+    var allProducts = useSelector((state) => state.allProducts);
     var selectedCard = useSelector((state) => state.selectedCard);
     var navigate = useNavigate();
 
