@@ -6,12 +6,13 @@ import Accordion from 'react-bootstrap/Accordion';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { createContext, useEffect, useState } from "react";
-import {root} from "./index";
 import React from 'react';
-import CardFocus from "./Card";
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import logo from "./logo.svg";
+import { useNavigate } from "react-router-dom";
+import { isSelected } from "./reducers";
+import { useDispatch} from "react-redux";
 
 var passSelectedCard = createContext();
 
@@ -30,6 +31,8 @@ export default function Products () {
         categoryFlag: false,
         titleFlag: false
     })
+    var navigate = useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(() => {
          //Filter logic
@@ -126,21 +129,12 @@ export default function Products () {
     };
 
     var selectCard = (e) => {
-        root.render(
-            <React.StrictMode>
-                <passSelectedCard.Provider value={e}>
-                    <CardFocus />
-                </passSelectedCard.Provider>
-            </React.StrictMode>
-        );
+        dispatch(isSelected(e));
+        navigate("/Showcase");
     };
 
     var handleNav = () => {
-        root.render(
-            <React.StrictMode>
-                <Products />
-            </React.StrictMode>
-        );
+        navigate("/Products");
     }
 
     var handleSort = (e) => {

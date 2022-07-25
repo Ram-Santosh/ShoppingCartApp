@@ -3,14 +3,14 @@ import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import { useRef, useState } from 'react';
-import Products from './Products';
-import {root} from "./index";
+import { useNavigate } from "react-router-dom";
 
 export default function Login () {
 var [errors, setErrors] = useState("");
 var [emailError, setEmailError] = useState("");
 var email = useRef("");
 var password = useRef("");
+var navigate = useNavigate();
 
 
 var handleValidation = (e) => {
@@ -35,11 +35,7 @@ var handleValidation = (e) => {
     }
 
     if (validEmail && validPassword) {
-        root.render(
-        <React.StrictMode>
-            <Products />
-        </React.StrictMode>
-        );
+        navigate("/Products");
     }
 }
 

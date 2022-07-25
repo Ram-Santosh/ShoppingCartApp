@@ -1,20 +1,19 @@
-import { useContext } from "react";
-import { passSelectedCard } from "./Products";
 import productCat from "./products.json";
 import Carousel from 'react-bootstrap/Carousel';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import logo from "./logo.svg";
-import Products from "./Products";
-import {root} from "./index";
 import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 var allProducts = productCat["products"];
 
 export default function CardFocus () {
-    var selectedCard = useContext(passSelectedCard);
+    var selectedCard = useSelector((state) => state.selectedCard);
+    var navigate = useNavigate();
 
     var product = allProducts.filter((product) => {
         if (product.id === selectedCard){
@@ -23,14 +22,9 @@ export default function CardFocus () {
     })[0];
 
     var handleNav = () => {
-        root.render(
-            <React.StrictMode>
-                <Products />
-            </React.StrictMode>
-        );
+        navigate("/Products");
     }
 
-    console.log(product)
     return (
         <>
             <Navbar bg="dark" variant="dark" className="mb-4">
