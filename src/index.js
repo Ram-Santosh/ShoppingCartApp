@@ -8,6 +8,7 @@ import Products from './Products';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import configStore from './configStore';
 import { Provider } from 'react-redux';
+import Cart from './Cart';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,6 +19,7 @@ root.render(
           <Route path="/" element={<Login />}/>
           <Route path='Products' element={<Products />}/>
           <Route path="Showcase" element={<CardFocus />}/>
+          <Route path="Cart" element={<Cart />}/>
         </Routes>
       </BrowserRouter>
     </Provider>

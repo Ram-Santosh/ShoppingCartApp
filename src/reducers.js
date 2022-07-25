@@ -4,7 +4,9 @@ export const allProductsSlice = createSlice({
     name:"AllProducts",
     initialState:{
         allProducts:[],
-        selectedCard:""
+        selectedCard:"",
+        cart: {},
+        cartCount: 0
     },
     reducers: {
         isSelected: (state, action)=> {
@@ -13,9 +15,15 @@ export const allProductsSlice = createSlice({
         loadAllProducts: (state, action) => {
             state.allProducts = action.payload;
         },
+        addToCart: (state, action) => {
+            state.cart = action.payload;
+        },
+        incCartCount: (state) => {
+            state.cartCount += 1;
+        }
     }
 }); 
 
-export const { isSelected, loadAllProducts } = allProductsSlice.actions;
+export const { isSelected, loadAllProducts, addToCart, incCartCount } = allProductsSlice.actions;
 
 export default allProductsSlice.reducer;

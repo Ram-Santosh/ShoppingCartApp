@@ -13,11 +13,14 @@ import { useNavigate } from "react-router-dom";
 import { isSelected, loadAllProducts } from "./reducers";
 import { useSelector, useDispatch} from "react-redux";
 import axios from 'axios';
+import cartImg from "./cart.jpg";
+import Nav from 'react-bootstrap/Nav';
 
 export default function Products () {
     var brands = ["OPPO","Apple","Samsung","Huawei","Ifei Home","Soft Cotton"];
     var category = ["laptops","smartphones","furniture","groceries","skincare","fragrances"];
     var allProducts = useSelector((state)=> state.allProducts);
+    var cartCount = useSelector((state)=> state.cartCount);
     var [displayCards, setDisplayCards] = useState(allProducts);
     var [filter, setFilter] = useState({
         brand: [],
@@ -39,7 +42,7 @@ export default function Products () {
             });
         }
         loadData();
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
          //Filter logic
@@ -156,6 +159,10 @@ export default function Products () {
         }
     }
 
+    var goToCart = () => {
+        navigate("/Cart");
+    }
+
     return (
         <>
             <Navbar bg="dark" variant="dark" className="mb-4">
@@ -170,6 +177,10 @@ export default function Products () {
                     />
                     Home
                 </Navbar.Brand>
+                <Nav className="text-end">
+                    <Nav href="/"><img src={cartImg} style={{width:"40px", height:"40px"}} onClick={goToCart} alt="cart"></img></Nav>
+                    <Nav className="fw-bolder" style={{color:"white"}}>{cartCount}</Nav>
+                </Nav>
                 </Container>
             </Navbar>
 

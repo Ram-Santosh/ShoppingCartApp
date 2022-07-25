@@ -1,4 +1,3 @@
-import productCat from "./products.json";
 import Carousel from 'react-bootstrap/Carousel';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
@@ -6,14 +5,21 @@ import logo from "./logo.svg";
 import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, incCartCount } from './reducers';
+import cartImg from "./cart.jpg"
+import Nav from 'react-bootstrap/Nav';
 
 
 export default function CardFocus () {
     var allProducts = useSelector((state) => state.allProducts);
     var selectedCard = useSelector((state) => state.selectedCard);
+    var cart = useSelector((state) => state.cart);
+    var cartCount = useSelector((state)=> state.cartCount);
     var navigate = useNavigate();
+    var dispatch = useDispatch();
 
     var product = allProducts.filter((product) => {
         if (product.id === selectedCard){
@@ -23,6 +29,22 @@ export default function CardFocus () {
 
     var handleNav = () => {
         navigate("/Products");
+    }
+
+    var handleCart = (item) => {
+        var copyCart = Object.assign({}, cart);
+        if (item in copyCart) {
+            copyCart[item] = copyCart[item] + 1; 
+        }
+        else {
+            copyCart[item] = 1;
+        }
+        dispatch(incCartCount());
+        dispatch(addToCart(copyCart));
+    }
+
+    var goToCart = () => {
+        navigate("/Cart");
     }
 
     return (
@@ -39,6 +61,10 @@ export default function CardFocus () {
                     />
                     Home
                 </Navbar.Brand>
+                <Nav className="text-end">
+                    <Nav href="/"><img src={cartImg} style={{width:"40px", height:"40px"}} onClick={goToCart} alt="cart"></img></Nav>
+                    <Nav className="fw-bolder" style={{color:"white"}}>{cartCount}</Nav>
+                </Nav>
                 </Container>
             </Navbar>
 
@@ -67,6 +93,8 @@ export default function CardFocus () {
                         <hr/>
                         <p>M.R.P: <s>${product.price}</s></p>
                         <p>On Sale: ${Math.round(product.price - product.discountPercentage*product.price*0.01)}</p>
+                        <p>Stock: {product.stock}</p>
+                        <Button variant="warning" onClick={() => handleCart(product.id)}>Add to Cart</Button>
                     </Col>
                 </Row>
                 <Row className="mt-4">
