@@ -19,6 +19,25 @@ export default function Cart () {
     }
 
     var goToCart = () => {
+        var cards = allProducts.filter((item)=>{
+            if (item["id"] in cart) {
+                var card = <Row>
+                    <Col>
+                        <img src={item.thumbnail} alt="thumnail"></img>
+                    </Col>
+                    <Col>
+                        <h4>{item.title}</h4>
+                        <p>Stock: {item.stock}</p>
+                        <p>Quantity: {cart[item.id]}</p> 
+                    </Col>
+                    <Col>
+                    </Col>
+                </Row>;
+                // console.log(card)
+                return card;
+            }
+        })
+        console.log(cards)
         navigate("/Cart");
     }
 
@@ -45,22 +64,7 @@ export default function Cart () {
             <Container>
                 <h3>Shopping Cart</h3>
 
-                {allProducts.filter((item)=>{
-                    if (item.id in cart) {
-                        var card = <Row>
-                            <Col>
-                                <img src={item.thumbnail} alt="thumnail"></img>
-                            </Col>
-                            <Col>
-                                <h4>{item.title}</h4>
-                                <p>Stock: {item.stock}</p>
-                            </Col>
-                            <Col>
-                            </Col>
-                        </Row>
-                        return card;
-                    }
-                })}
+                {/* {} */}
             </Container>
         </>
     )
