@@ -12,7 +12,7 @@ export const allProductsSlice = createSlice({
         },
         loadAllProducts: (state, action) => {
             state.allProducts = action.payload;
-        }
+        },
     }
 }); 
 

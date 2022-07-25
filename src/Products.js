@@ -1,11 +1,10 @@
-import productCat from "./products.json";
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Accordion from 'react-bootstrap/Accordion';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
@@ -13,14 +12,12 @@ import logo from "./logo.svg";
 import { useNavigate } from "react-router-dom";
 import { isSelected } from "./reducers";
 import { useDispatch} from "react-redux";
-
-var passSelectedCard = createContext();
-
+import { useSelector } from 'react-redux';
 
 export default function Products () {
     var brands = ["OPPO","Apple","Samsung","Huawei","Ifei Home","Soft Cotton"];
     var category = ["laptops","smartphones","furniture","groceries","skincare","fragrances"];
-    var allProducts = productCat["products"];
+    var allProducts = useSelector((state)=> state.allProducts);
     var [displayCards, setDisplayCards] = useState(allProducts);
     var [filter, setFilter] = useState({
         brand: [],
@@ -33,6 +30,13 @@ export default function Products () {
     })
     var navigate = useNavigate();
     const dispatch = useDispatch();
+
+    useEffect(async () => {
+        await axios.get('https://dummyjson.com/docs/products')
+            .then(response => {
+                console.lo
+            });
+    }, []);
 
     useEffect(() => {
          //Filter logic
@@ -266,5 +270,3 @@ export default function Products () {
         </>
     );
 };
-
-export {passSelectedCard};
