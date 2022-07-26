@@ -189,6 +189,9 @@ export default function Products () {
                     />
                     Home
                 </Navbar.Brand>
+                <Nav className="text-start" onClick={()=>navigate("/Add-Product")}>
+                    <Nav style={{color:"white"}}>Add products</Nav>
+                </Nav>
                 <Nav className="text-end">
                     <Nav href="/"><img src={cartImg} style={{width:"40px", height:"40px"}} onClick={goToCart} alt="cart"></img></Nav>
                     <Nav className="fw-bolder" style={{color:"white"}}>{cartCount}</Nav>
