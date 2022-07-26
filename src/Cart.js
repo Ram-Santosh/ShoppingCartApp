@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux"
+import { useSelector } from "react-redux";
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import logo from "./logo.svg";
@@ -28,7 +28,7 @@ export default function Cart () {
         })
         setTotalPrice(total);
         setDisplayItems(cards);
-    },[]);
+    },[allProducts, cart]);
 
     var handleNav = () => {
         navigate("/Products");
@@ -36,6 +36,10 @@ export default function Cart () {
 
     var goToCart = () => {
         navigate("/Cart");
+    }
+
+    var handleProceed = () => {
+        navigate("/Checkout");
     }
 
     return (
@@ -82,7 +86,7 @@ export default function Cart () {
                     </Col>
                     <Col md={{span:3}} className="p-3">
                         <h3>SubTotal: ${totalPrice}</h3>  
-                        <Button variant="success" className="m-2">Proceed to Checkout</Button>
+                        <Button variant="success" className="m-2" onClick={handleProceed}>Proceed to Checkout</Button>
                     </Col>
                 </Row>
             </Container>

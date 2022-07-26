@@ -9,6 +9,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import configStore from './configStore';
 import { Provider } from 'react-redux';
 import Cart from './Cart';
+import Checkout from './Checkout';
+import Summary from './Summary';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -20,6 +22,8 @@ root.render(
           <Route path='Products' element={<Products />}/>
           <Route path="Showcase" element={<CardFocus />}/>
           <Route path="Cart" element={<Cart />}/>
+          <Route path='Checkout' element={<Checkout />}></Route>
+          <Route path='Summary' element={<Summary />}></Route>
         </Routes>
       </BrowserRouter>
     </Provider>

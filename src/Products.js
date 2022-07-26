@@ -15,6 +15,7 @@ import { useSelector, useDispatch} from "react-redux";
 import axios from 'axios';
 import cartImg from "./cart.jpg";
 import Nav from 'react-bootstrap/Nav';
+import loadImg from "./loading.gif";
 
 export default function Products () {
     var brands = ["OPPO","Apple","Samsung","Huawei","Ifei Home","Soft Cotton"];
@@ -33,12 +34,14 @@ export default function Products () {
     })
     var navigate = useNavigate();
     const dispatch = useDispatch();
+    var [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function loadData () {
             await axios.get('https://dummyjson.com/products?limit=100')
             .then(response => {
                 dispatch(loadAllProducts(response.data.products));
+                setLoading(false);
             });
         }
         loadData();
@@ -163,6 +166,15 @@ export default function Products () {
         navigate("/Cart");
     }
 
+    if (loading) {
+        return (
+            <>
+            <Container>
+                <img src={loadImg} alt='loading' style={{display: "block", marginLeft: "auto", marginRight: "auto", width: "50%"}}></img>
+            </Container>
+            </>
+        )
+    }
     return (
         <>
             <Navbar bg="dark" variant="dark" className="mb-4">
