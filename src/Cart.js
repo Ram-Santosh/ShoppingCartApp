@@ -78,7 +78,7 @@ export default function Cart () {
                             </Col>
                             <Col>
                                 <h4>Price</h4>
-                                <p>{item.price}</p>
+                                <p>${item.price}</p>
                             </Col>
                         </Row>;
                         return card;
