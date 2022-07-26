@@ -38,7 +38,7 @@ export default function Products () {
 
     useEffect(() => {
         async function loadData () {
-            await axios.get('https://dummyjson.com/products?limit=100')
+            await axios.get('https://dummyjson.com/products?limit=1000')
             .then(response => {
                 dispatch(loadAllProducts(response.data.products));
                 setLoading(false);

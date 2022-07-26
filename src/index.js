@@ -11,6 +11,7 @@ import { Provider } from 'react-redux';
 import Cart from './Cart';
 import Checkout from './Checkout';
 import Summary from './Summary';
+import AddProducts from './AddProducts';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -24,6 +25,7 @@ root.render(
           <Route path="Cart" element={<Cart />}/>
           <Route path='Checkout' element={<Checkout />}></Route>
           <Route path='Summary' element={<Summary />}></Route>
+          <Route path='Add-Product' element={<AddProducts />}></Route>
         </Routes>
       </BrowserRouter>
     </Provider>

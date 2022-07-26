@@ -86,7 +86,7 @@ export default function Cart () {
                     </Col>
                     <Col md={{span:3}} className="p-3">
                         <h3>SubTotal: ${totalPrice}</h3>  
-                        <Button variant="success" className="m-2" onClick={handleProceed}>Proceed to Checkout</Button>
+                        <Button variant="success" className="m-2" onClick={handleProceed}>Place Order</Button>
                     </Col>
                 </Row>
             </Container>
