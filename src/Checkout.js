@@ -21,12 +21,12 @@ export default function Checkout () {
 
     var handleAddress = (e) => {
         e.preventDefault();
-        if (address.current.value.length > 0){
+        if (address.current.value.length > 10){
             dispatch(addAddress(address.current.value));
             navigate("/Summary");
         }
         else {
-            setError("Please enter a valid address");
+            setError("Length of address should be greater than 10");
         }
     }
 
