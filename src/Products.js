@@ -49,7 +49,7 @@ export default function Products () {
 
     useEffect(() => {
          //Filter logic
-         var fil = allProducts;
+         var fil = [...allProducts];
 
          if (filter.brandFlag){
             fil = allProducts.filter((product) => {
